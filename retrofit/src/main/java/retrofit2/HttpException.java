@@ -15,10 +15,14 @@
  */
 package retrofit2;
 
+import javax.annotation.Nullable;
+
+import static retrofit2.Utils.checkNotNull;
+
 /** Exception for an unexpected, non-2xx HTTP response. */
-public class HttpException extends Exception {
+public class HttpException extends RuntimeException {
   private static String getMessage(Response<?> response) {
-    if (response == null) throw new NullPointerException("response == null");
+    checkNotNull(response, "response == null");
     return "HTTP " + response.code() + " " + response.message();
   }
 
@@ -46,7 +50,7 @@ public class HttpException extends Exception {
   /**
    * The full HTTP response. This may be null if the exception was serialized.
    */
-  public Response<?> response() {
+  public @Nullable Response<?> response() {
     return response;
   }
 }
